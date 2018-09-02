@@ -85,8 +85,127 @@ export const getFakeFileData = () => {
     FileList - an array-like sequence of File objects. (Think <input type="file" multiple> or dragging a directory of files from the desktop).
     Blob - Allows for slicing a file into byte ranges.
     When used in conjunction with the above data structures, the FileReader interface can be used to asynchronously read a file through familiar JavaScript event handling. Thus, it is possible to monitor the progress of a read, catch errors, and determine when a load is complete. In many ways the APIs resemble XMLHttpRequest's event model.`,
+    `
+    export const EditorGroupHeader: React.SFC<EditorHeaderProps> = props => {
+      const editorGroupMap = props.editorGroup!.editorGroup;
+      const editors: any[] = [];
+
+      editorGroupMap.forEach((editor, editorKey) => {
+        const editorObj = editorGroupMap.get(editorKey);
+        editors.push(
+          <div
+            key={editorKey}
+            onClick={() => props.editorGroup.setActiveEditor(editorKey)}
+          >
+            {editorObj!.filePath}
+          </div>
+        );
+      });
+
+      return <div>{editors}</div>;
+    };
+    `,
+    `
+    {
+      "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "build/dist",
+        "module": "esnext",
+        "target": "es5",
+        "lib": ["es6", "dom"],
+        "sourceMap": true,
+        "allowJs": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "rootDir": "src",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true,
+        "experimentalDecorators": true
+      },
+      "exclude": [
+        "node_modules",
+        "build",
+        "scripts",
+        "acceptance-tests",
+        "webpack",
+        "jest",
+        "src/setupTests.ts"
+      ]
+    }
+    `,
+    `
+    import { flow, observable } from 'mobx';
+
+import { fakeFiles } from './FAKE_DATA';
+
+export type Content = {
+  name: string;
+  type: 'directory' | 'file';
+  contents: Content[];
+};
+
+export class FileTreeModel {
+  @observable
+  contents: Content[];
+
+  fetchFiles = flow(function*(this: FileTreeModel) {
+    this.contents = yield fakeFiles;
+  });
+}
+`,
+    `
+import * as React from 'react';
+const MonacoEditor = require('react-monaco-editor').default;
+
+export interface EditorProps {
+  fileName: string;
+  filePath: string;
+  sourceCode: string;
+  changedSourceCode: string;
+  isOpen: boolean;
+}
+
+export class Editor extends React.Component<EditorProps, any> {
+  handleChange = () => {
+    // do nothin
+  };
+
+  render() {
+    console.log(MonacoEditor);
+    return (
+      <MonacoEditor
+        language="javascript"
+        theme="vs-dark"
+        value={this.props.sourceCode}
+        onChange={this.handleChange}
+      />
+    );
+  }
+}
+`,
+    `
+body {
+  margin: 0;
+  padding: 0;
+}
+`,
+    `body {
+  margin: 0;
+  padding: 0;
+}
+`,
+    `body {
+  margin: 0;
+  padding: 0;
+}
+`,
   ];
 
-//   const randomIndex = Math.min(Math.round(Math.random() * 10), files.length);
-  return files[0];
+  const randomIndex = Math.floor(Math.random() * 10);
+  return files[randomIndex];
 };

@@ -34,4 +34,9 @@ export class EditorGroupModel {
   setActiveEditor = (activeEditor: string) => {
     this.activeEditor = activeEditor;
   };
+
+  @action
+  closeEditor = (editorKey: string) => {
+    this.editorGroup.delete(editorKey);
+  };
 }

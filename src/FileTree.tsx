@@ -3,19 +3,35 @@ import ChevronRightIcon from '@atlaskit/icon/glyph/chevron-right';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 
-const FileIcons = require('file-icons-js');
-
 import { EditorGroupModel } from './EditorGroupModel';
+import * as styles from './FileTree.style';
 import { Content, FileTreeModel } from './FileTreeModel';
+import { getFileIcon } from './utils';
+
+const iconMap = {
+  treeClosed: <ChevronRightIcon label="close" />,
+  treeOpen: <ChevronDownIcon label="open" />,
+};
 
 export interface FileTreeProps {
   fileTree?: FileTreeModel;
   editorGroup?: EditorGroupModel;
 }
 
+export interface FileTreeState {
+  expanded: boolean;
+}
+
 @inject(({ fileTree, editorGroup }) => ({ fileTree, editorGroup }))
 @observer
-export class FileTree extends React.Component<FileTreeProps, any> {
+export class FileTree extends React.Component<FileTreeProps, FileTreeState> {
+  constructor(props: FileTreeProps) {
+    super(props);
+    this.state = {
+      expanded: true,
+    };
+  }
+
   componentDidMount() {
     this.props.fileTree!.fetchFiles();
   }
@@ -25,20 +41,29 @@ export class FileTree extends React.Component<FileTreeProps, any> {
     this.props.editorGroup!.fetchSourceCode(filePath);
   };
 
-  getFileIcon = (fileName: string) => {
-    return FileIcons.getClassWithColor(fileName);
+  handleTitleClick = () => {
+    this.setState({
+      expanded: !this.state.expanded,
+    });
   };
 
+  renderTitle = () => (
+    <styles.FileTreeTitle onClick={this.handleTitleClick}>
+      {this.state.expanded ? iconMap.treeOpen : iconMap.treeClosed}
+      <span>Editor</span>
+    </styles.FileTreeTitle>
+  );
+
   renderFileName = (fileName: string) => (
-    <span onClick={() => this.hanldeFileNameClick(fileName)}>
-      <span className={this.getFileIcon(fileName)} />
-      {fileName}
-    </span>
+    <styles.TreeItemWrapper onClick={() => this.hanldeFileNameClick(fileName)}>
+      <styles.TreeIconWrapper className={getFileIcon(fileName)} />
+      <span>{fileName}</span>
+    </styles.TreeItemWrapper>
   );
 
   renderSubTree = (contents: Content[] = []): any => {
     return (
-      <ul>
+      <styles.SubFileTreeWrapper>
         {contents.map(content => {
           if (content.type === 'directory') {
             return (
@@ -56,21 +81,22 @@ export class FileTree extends React.Component<FileTreeProps, any> {
             );
           }
         })}
-      </ul>
+      </styles.SubFileTreeWrapper>
     );
   };
 
   render() {
-    return <div>{this.renderSubTree(this.props.fileTree!.contents)}</div>;
+    return (
+      <div>
+        {this.renderTitle()}
+        {this.state.expanded &&
+          this.renderSubTree(this.props.fileTree!.contents)}
+      </div>
+    );
   }
 }
 
 /* Subrtree */
-
-const iconMap = {
-  treeClosed: <ChevronRightIcon label="close" />,
-  treeOpen: <ChevronDownIcon label="open" />,
-};
 
 type SubTreeState = {
   expanded: boolean;
@@ -97,10 +123,10 @@ class SubTree extends React.Component<SubTreeProps, SubTreeState> {
   };
 
   renderDirName = (dirName: string) => (
-    <span onClick={this.handleDirNameClick}>
+    <styles.TreeItemWrapper onClick={this.handleDirNameClick}>
       {this.state.expanded ? iconMap.treeOpen : iconMap.treeClosed}
       {dirName}
-    </span>
+    </styles.TreeItemWrapper>
   );
 
   render() {
