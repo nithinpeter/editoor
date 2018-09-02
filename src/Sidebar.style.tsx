@@ -39,3 +39,10 @@ export const SidebarIconWrapper = styled.span`
   margin: 0 ${gridSize()}px 0 0;
   padding: 0;
 `;
+
+export const SidebarTextWrapper = styled.span`
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+  overflow: hidden;
+`;

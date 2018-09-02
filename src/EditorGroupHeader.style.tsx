@@ -9,6 +9,7 @@ export const EditorGroupHeader = styled.div`
 
 export const CloseIconWrapper = styled.span`
   opacity: 0;
+  width: ${gridSize() * 3}px;
   margin: ${gridSize() * 0.5}px 0 0 ${gridSize() * 0.5}px;
 `;
 
@@ -35,4 +36,12 @@ export const EditorGroupHeaderItem = styled.div<{ isActive: boolean }>`
 
 export const EditorGroupHeaderItemIcon = styled.span`
   margin-right: ${gridSize()}px;
+`;
+
+export const EditorGroupHeaderItemLabel = styled.span`
+  max-width: ${gridSize() * 30}px;
+  overflow: hidden;
+  flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;

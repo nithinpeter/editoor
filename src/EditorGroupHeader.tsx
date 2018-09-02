@@ -27,7 +27,9 @@ const Header: React.SFC<EditorHeaderProps> = props => {
             <styles.EditorGroupHeaderItemIcon
               className={getFileIcon(editorObj!.fileName)}
             />
-            <span>{editorObj!.filePath}</span>
+            <styles.EditorGroupHeaderItemLabel>
+              {editorObj!.filePath}
+            </styles.EditorGroupHeaderItemLabel>
             <styles.CloseIconWrapper
               onClick={e => {
                 props.editorGroup!.closeEditor(editorKey);

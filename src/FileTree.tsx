@@ -55,7 +55,9 @@ export class FileTree extends React.Component<FileTreeProps, FileTreeState> {
       onClick={() => this.hanldeFileNameClick(fileName)}
     >
       <sidebarStyles.SidebarIconWrapper className={getFileIcon(fileName)} />
-      <span>{fileName}</span>
+      <sidebarStyles.SidebarTextWrapper>
+        {fileName}
+      </sidebarStyles.SidebarTextWrapper>
     </sidebarStyles.SidebarItemWrapper>
   );
 

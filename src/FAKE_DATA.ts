@@ -25,6 +25,54 @@ export const fakeFiles = [
     ],
   },
   {
+    name: 'src',
+    type: 'directory',
+    contents: [
+      {
+        name: 'app',
+        type: 'directory',
+        contents: [
+          {
+            name: 'main.json',
+            type: 'file',
+          },
+          {
+            name: 'dir.jsx',
+            type: 'file',
+          },
+          {
+            name: 'faar.tsx',
+            type: 'file',
+          },
+          {
+            name: 'shell.sh',
+            type: 'file',
+          },
+          {
+            name: 'rst.rs',
+            type: 'file',
+          },
+          {
+            name: 'lang.java',
+            type: 'file',
+          },
+          {
+            name: 'sharp.cs',
+            type: 'file',
+          },
+          {
+            name: 'a.thisshouldngexixt',
+            type: 'file',
+          },
+          {
+            name: 'what-a-long-file-name-a.what-a-long-file-name-a.what-a-long-file-name.sh',
+            type: 'file',
+          },
+        ],
+      },
+    ],
+  },
+  {
     name: 'tests',
     type: 'directory',
     contents: [
