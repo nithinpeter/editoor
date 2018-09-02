@@ -11,6 +11,10 @@
     "interface-name": false,
     "member-access": false,
     "interface-over-type-literal": false,
-    "no-debugger": false
+    "no-debugger": false,
+    "max-classes-per-file": false,
+    "no-var-requires": false,
+    "jsx-no-lambda": false,
+    "no-console": false
   }
 }

@@ -1,6 +1,8 @@
 import { Provider } from 'mobx-react';
 import * as React from 'react';
 
+import * as styles from './App.style';
+import { EditorGroup } from './EditorGroup';
 import { createRootStore } from './RootStore';
 import { Sidebar } from './Sidebar';
 
@@ -8,9 +10,10 @@ class App extends React.Component {
   public render() {
     return (
       <Provider {...createRootStore()}>
-        <div className="App">
+        <styles.StyledApp>
           <Sidebar />
-        </div>
+          <EditorGroup />
+        </styles.StyledApp>
       </Provider>
     );
   }
