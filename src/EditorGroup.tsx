@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { Editor } from './Editor';
 import * as styles from './EditorGroup.style';
+import { EditorGroupBlank } from './EditorGroupBlank';
 import { EditorGroupHeader } from './EditorGroupHeader';
 import { EditorGroupModel } from './EditorGroupModel';
 
@@ -13,17 +14,21 @@ export interface EditorGroupProps {
 @inject(({ editorGroup }) => ({ editorGroup }))
 @observer
 export class EditorGroup extends React.Component<EditorGroupProps, any> {
+  renderBlank() {
+    return <EditorGroupBlank />;
+  }
+
   renderEditor = () => {
     const editorGroupMap = this.props.editorGroup!.editorGroup;
     const activeEditor = this.props.editorGroup!.activeEditor;
 
     if (!activeEditor) {
-      return;
+      return this.renderBlank();
     }
 
     const editorObj = editorGroupMap.get(activeEditor);
     if (!editorObj) {
-      return;
+      return this.renderBlank();
     }
 
     return (

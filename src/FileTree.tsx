@@ -1,17 +1,12 @@
-import ChevronDownIcon from '@atlaskit/icon/glyph/chevron-down';
-import ChevronRightIcon from '@atlaskit/icon/glyph/chevron-right';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 
 import { EditorGroupModel } from './EditorGroupModel';
 import * as styles from './FileTree.style';
 import { Content, FileTreeModel } from './FileTreeModel';
-import { getFileIcon } from './utils';
-
-const iconMap = {
-  treeClosed: <ChevronRightIcon label="close" />,
-  treeOpen: <ChevronDownIcon label="open" />,
-};
+import * as sidebarStyles from './Sidebar.style';
+import { SidebarSectionTitle } from './SidebarSectionTitle';
+import { getFileIcon, iconMap } from './utils';
 
 export interface FileTreeProps {
   fileTree?: FileTreeModel;
@@ -48,17 +43,20 @@ export class FileTree extends React.Component<FileTreeProps, FileTreeState> {
   };
 
   renderTitle = () => (
-    <styles.FileTreeTitle onClick={this.handleTitleClick}>
-      {this.state.expanded ? iconMap.treeOpen : iconMap.treeClosed}
-      <span>Editor</span>
-    </styles.FileTreeTitle>
+    <SidebarSectionTitle
+      expanded={this.state.expanded}
+      label="Files"
+      onClick={this.handleTitleClick}
+    />
   );
 
   renderFileName = (fileName: string) => (
-    <styles.TreeItemWrapper onClick={() => this.hanldeFileNameClick(fileName)}>
-      <styles.TreeIconWrapper className={getFileIcon(fileName)} />
+    <sidebarStyles.SidebarItemWrapper
+      onClick={() => this.hanldeFileNameClick(fileName)}
+    >
+      <sidebarStyles.SidebarIconWrapper className={getFileIcon(fileName)} />
       <span>{fileName}</span>
-    </styles.TreeItemWrapper>
+    </sidebarStyles.SidebarItemWrapper>
   );
 
   renderSubTree = (contents: Content[] = []): any => {
@@ -123,10 +121,10 @@ class SubTree extends React.Component<SubTreeProps, SubTreeState> {
   };
 
   renderDirName = (dirName: string) => (
-    <styles.TreeItemWrapper onClick={this.handleDirNameClick}>
+    <sidebarStyles.SidebarItemWrapper onClick={this.handleDirNameClick}>
       {this.state.expanded ? iconMap.treeOpen : iconMap.treeClosed}
       {dirName}
-    </styles.TreeItemWrapper>
+    </sidebarStyles.SidebarItemWrapper>
   );
 
   render() {

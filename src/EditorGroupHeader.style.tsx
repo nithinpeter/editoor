@@ -13,6 +13,7 @@ export const CloseIconWrapper = styled.span`
 `;
 
 export const EditorGroupHeaderItem = styled.div<{ isActive: boolean }>`
+  height: ${gridSize() * 7}px;
   padding: ${gridSize() * 1.5}px ${gridSize() * 2}px;
   color: ${props => (props.isActive ? getTheme().C800 : getTheme().C200)};
   background: ${props => props.isActive && getTheme().C40};
